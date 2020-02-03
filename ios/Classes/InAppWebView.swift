@@ -949,6 +949,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         configuration.userContentController.addUserScript(jscriptWebkitTouchCallout)
         
         let promisePolyfillJSScript = WKUserScript(source: promisePolyfillJS, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        // Note: we deactivated this because of the problem: iframes issues: captcha was not interactive, whatsapp plugin was not visible
         // configuration.userContentController.addUserScript(promisePolyfillJSScript)
         
         let javaScriptBridgeJSScript = WKUserScript(source: javaScriptBridgeJS, injectionTime: .atDocumentStart, forMainFrameOnly: false)
