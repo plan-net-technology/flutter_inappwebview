@@ -140,7 +140,11 @@ public class MyCookieManager implements MethodChannel.MethodCallHandler {
     cookieManager = getCookieManager();
     if (cookieManager == null) return;
 
-    String cookieValue = name + "=" + value + "; Domain=" + domain + "; Path=" + path;
+    // We've updated this string because we saw that server can't override a previously set cookie if we set also the domain in this way
+    // Server is trying to set the following cookie: "PHPSESSID=e9if4lo8h6fui5ac2bsi2b10lq; path=/; HttpOnly"
+    // String cookieValue = name + "=" + value + "; Domain=" + domain + "; Path=" + path;
+
+    String cookieValue = name + "=" + value + "; Path=" + path;
 
     if (expiresDate != null)
       cookieValue += "; Expires=" + getCookieExpirationDate(expiresDate);
