@@ -1516,7 +1516,15 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
     public func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+        // Note: added so that we don't allow adobe tracking
+        if let host = navigationAction.request.url?.host {
+            if host.contains("assets.adobedtm.com") {
+                decisionHandler(.cancel)
+                return
+            }
+        }
+        // end Note
+
         if let url = navigationAction.request.url {
             
             if activateShouldOverrideUrlLoading && (options?.useShouldOverrideUrlLoading)! {
