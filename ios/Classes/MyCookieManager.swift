@@ -93,9 +93,8 @@ class MyCookieManager: NSObject, FlutterPlugin {
         properties[.secure] = (isSecure != nil && isSecure!) ? "TRUE" : "FALSE"
         
         let cookie = HTTPCookie(properties: properties)!
-        MyCookieManager.httpCookieStore!.setCookie(cookie, completionHandler: {() in
-            result(true)
-        })
+        MyCookieManager.httpCookieStore!.setCookie(cookie)
+        result(true)
     }
     
     public static func getCookies(url: String, result: @escaping FlutterResult) {
