@@ -37,17 +37,17 @@ class MyCookieManager: NSObject, FlutterPlugin {
                 let value = arguments!["value"] as! String
                 let domain = arguments!["domain"] as! String
                 let path = arguments!["path"] as! String
-                
+
                 var expiresDate: Int64?
                 if let expiresDateString = arguments!["expiresDate"] as? String {
                     expiresDate = Int64(expiresDateString)
                 }
-                
+
                 let maxAge = arguments!["maxAge"] as? Int64
                 let isSecure = arguments!["isSecure"] as? Bool
                 let isHttpOnly = arguments!["isHttpOnly"] as? Bool
                 let sameSite = arguments!["sameSite"] as? String
-                
+
                 MyCookieManager.setCookie(url: url,
                                           name: name,
                                           value: value,
@@ -137,15 +137,13 @@ class MyCookieManager: NSObject, FlutterPlugin {
         }
         
         let cookie = HTTPCookie(properties: properties)!
-        
-        MyCookieManager.httpCookieStore!.setCookie(cookie, completionHandler: {() in
-            result(true)
-        })
+        MyCookieManager.httpCookieStore!.setCookie(cookie)
+        result(true)
     }
     
     public static func getCookies(url: String, result: @escaping FlutterResult) {
         var cookieList: [[String: Any?]] = []
-        
+
         if let urlHost = URL(string: url)?.host {
             MyCookieManager.httpCookieStore!.getAllCookies { (cookies) in
                 for cookie in cookies {
@@ -156,13 +154,13 @@ class MyCookieManager: NSObject, FlutterPlugin {
                                 sameSite = sameSiteValue.prefix(1).capitalized + sameSiteValue.dropFirst()
                             }
                         }
-                        
+
                         var expiresDateTimestamp: Int64 = -1
                         if let expiresDate = cookie.expiresDate?.timeIntervalSince1970 {
                             // convert to milliseconds
                             expiresDateTimestamp = Int64(expiresDate * 1000)
                         }
-                        
+
                         cookieList.append([
                             "name": cookie.name,
                             "value": cookie.value,
@@ -182,13 +180,13 @@ class MyCookieManager: NSObject, FlutterPlugin {
         } else {
             print("Cannot get WebView cookies. No HOST found for URL: \(url)")
         }
-        
+
         result(cookieList)
     }
-    
+
     public static func getAllCookies(result: @escaping FlutterResult) {
         var cookieList: [[String: Any?]] = []
-        
+
         MyCookieManager.httpCookieStore!.getAllCookies { (cookies) in
             for cookie in cookies {
                 var sameSite: String? = nil
@@ -197,13 +195,13 @@ class MyCookieManager: NSObject, FlutterPlugin {
                         sameSite = sameSiteValue.prefix(1).capitalized + sameSiteValue.dropFirst()
                     }
                 }
-                
+
                 var expiresDateTimestamp: Int64 = -1
                 if let expiresDate = cookie.expiresDate?.timeIntervalSince1970 {
                     // convert to milliseconds
                     expiresDateTimestamp = Int64(expiresDate * 1000)
                 }
-                
+
                 cookieList.append([
                     "name": cookie.name,
                     "value": cookie.value,
