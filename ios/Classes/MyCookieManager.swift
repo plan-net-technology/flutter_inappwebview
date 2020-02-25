@@ -137,6 +137,8 @@ class MyCookieManager: NSObject, FlutterPlugin {
         }
         
         let cookie = HTTPCookie(properties: properties)!
+        // Removed waiting for completion handler to complete because on iOS11 and sometimes on iOS12, it's not completing itself and it's blocking app flow
+        // This needs to be changed in future because it's not working every time
         MyCookieManager.httpCookieStore!.setCookie(cookie)
         result(true)
     }
