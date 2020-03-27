@@ -377,22 +377,22 @@ class _InAppWebViewState extends State<InAppWebView> {
           .addAll(widget.initialOptions.ios?.toMap() ?? {});
 
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return AndroidView(
-        viewType: 'com.pichillilorenzo/flutter_inappwebview',
-        onPlatformViewCreated: _onPlatformViewCreated,
-        gestureRecognizers: widget.gestureRecognizers,
-        layoutDirection: TextDirection.rtl,
-        creationParams: <String, dynamic>{
-          'initialUrl': widget.initialUrl,
-          'initialFile': widget.initialFile,
-          'initialData': widget.initialData?.toMap(),
-          'initialHeaders': widget.initialHeaders,
-          'initialOptions': initialOptions
-        },
-        creationParamsCodec: const StandardMessageCodec(),
-      );
+//      return AndroidView(
+//        viewType: 'com.pichillilorenzo/flutter_inappwebview',
+//        onPlatformViewCreated: _onPlatformViewCreated,
+//        gestureRecognizers: widget.gestureRecognizers,
+//        layoutDirection: TextDirection.rtl,
+//        creationParams: <String, dynamic>{
+//          'initialUrl': widget.initialUrl,
+//          'initialFile': widget.initialFile,
+//          'initialData': widget.initialData?.toMap(),
+//          'initialHeaders': widget.initialHeaders,
+//          'initialOptions': initialOptions
+//        },
+//        creationParamsCodec: const StandardMessageCodec(),
+//      );
       // onLongPress issue: https://github.com/flutter/plugins/blob/f31d16a6ca0c4bd6849cff925a00b6823973696b/packages/webview_flutter/lib/src/webview_android.dart#L31
-      /*return GestureDetector(
+      return GestureDetector(
         onLongPress: () {},
         excludeFromSemantics: true,
         child: AndroidView(
@@ -409,7 +409,7 @@ class _InAppWebViewState extends State<InAppWebView> {
           },
           creationParamsCodec: const StandardMessageCodec(),
         ),
-      );*/
+      );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
         viewType: 'com.pichillilorenzo/flutter_inappwebview',
